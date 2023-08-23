@@ -1,0 +1,966 @@
+---
+title: "Relatório de Testes de Hipóteses"
+author: "Matheus Freitas Martins - 3031"
+date: "14/10/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Exercício 1
+Trace uma curva normal e sombreie a área desejada obtendo então a informação.
+
+```{r}
+#a) Área à direita de Z = 1
+1-pnorm(1)
+pnorm(1, lower.tail = FALSE)
+#b) Área à esquerda de Z = 1
+pnorm(1)
+#c) Área entre Z = 0 e Z = 1, 5
+pnorm(1.5)-pnorm(0)
+#d) Área entre Z = −0, 56 e Z = −0, 2
+pnorm(-0.2)-pnorm(-0.56)
+#e) Área entre Z = 0, 5 e Z = 0, 5
+pnorm(0.5)-pnorm(0.5)
+#f) Área entre Z = 0 e Z = −2, 5
+pnorm(0)-pnorm(-2.5)
+```
+## Exercício 2
+Usando a tabela da distribuição normal, determine os valores de Z que correspondem às seguintes áreas:
+```{r}
+#a) Área de 0,0505 à esquerda de Z.
+qnorm(0.0505)
+#b) Área de 0,0228 à direita de Z
+qnorm(0.0228, lower.tail = FALSE)
+#pnorm(1.999077, lower.tail = FALSE)
+#c) Área de 0,0228 à esquerda de Z
+qnorm(0.0228, lower.tail = TRUE)
+#d) 0,4772 entre 0 e z.
+qnorm(0.4772, lower.tail = FALSE)
+
+
+```
+## Exercício 3
+Consultando a tabela, determine a probabilidade de certo valor padronizado de Z estar entre Z0 = −1, 20 e Z1 = 2, 00.
+```{r}
+
+pnorm(2.00)-pnorm(-1.20)
+
+```
+
+## Exercício 4
+Dado uma variável X com distribuição normal de média 25 e desvio-padrão 2, determine os valores de Z para os seguintes valores (x) :
+```{r}
+mu=25
+sigma=2
+#a) 23
+x <- 23
+z <- (x-mu)/sigma
+z 
+#b) 23,5
+x <- 25.5
+z <- (x-mu)/sigma
+z
+#c) 24
+x <- 24
+z <- (x-mu)/sigma
+z
+#d) 25,2
+x <- 25.2
+z <- (x-mu)/sigma
+z
+#e) 25,5
+x <- 25.5
+z <- (x-mu)/sigma
+z
+```
+## Exercício 5
+Determine a probabilidade de certo valor padronizado de Z estar entre Z0 = −1, 30 e Z1 = 1.5.
+```{r}
+
+pnorm(1.50)-pnorm(-1.30)
+
+```
+
+## Exercício 6
+Uma população normal tem média 40 e desvio-padrão 3. Determine os valores da população correspondentes aos seguintes de Z:
+```{r}
+mu=40
+sigma=3
+#a) 0,10
+z = 0.1
+x= mu+sigma*z
+x
+#b) 2,00
+z = 2
+x= mu+sigma*z
+x
+#c) 0,75
+z = 0.75
+x= mu+sigma*z
+x
+#d) -3,00
+z = -3.00
+x= mu+sigma*z
+x
+#e) -2,53
+z = -2.53
+x= mu+sigma*z
+x
+
+```
+## Exercício 7
+Explique com suas palavras, exemplificando, o significado de:
+
+a) teste de hipótese: O teste de hipótese é uma ferramenta estatística baseada na utilização de uma amostra aleatória extraída de uma população de interesse, com o objetivo de testar uma afirmação sobre um parâmetro ou característica desta população.
+
+b) Hipótese nula (H0): A hipótese nula afirma que um parâmetro da população (como a média, o desvio padrão, e assim por diante) é igual a um valor hipotético. 
+
+Hipótese Alternativa (H1): A hipótese alternativa afirma que um parâmetro da população é menor, maior ou diferente do valor hipotético na hipótese nula. A hipótese alternativa é aquela que você acredita que pode ser verdadeira ou espera provar ser verdadeira.
+
+
+c) Erro tipo I: Quando a hipótese nula é verdadeira e você a rejeita, comete um erro do tipo I. A probabilidade de cometer um erro do tipo I é α, que é o nível de significância que você definiu para seu teste de hipóteses. 
+
+Erro tipo II: Quando a hipótese nula é falsa e você não a rejeita, comete um erro de tipo II. A probabilidade de cometer um erro de tipo II é β, que depende do poder do teste.
+
+
+d) Nível de significância: O nível de significância (ou nível α) é um limite que determina se o resultado de um estudo pode ser considerado estatisticamente significativo depois de se realizarem os teste estatísticos planeados.
+
+## Exercício 8
+Enuncie a hipótese nula e a hipótese alternativa em cada um dos casos a seguir.
+
+a) A produção média de certo cereal é de 40 toneladas por hectare. Acredita-se que um novo tipo de adubo aumenta a produção média por hectare
+
+$H_0: \mu=40$ toneladas por hectare
+$H_1: \mu>40$ toneladas por hectare
+
+b) Um sindicato de empregados de certa categoria deseja verificar se a taxa de desemprego em certo município é maior que a taxa de 12% observada seis meses antes.
+
+$H_0: \mu=0.12$ taxa de desemprego
+$H_1: \mu>0.12$ taxa de desemprego
+
+
+## Exercício 9
+O fabricante de certa marca de suco informa que as embalagens de seu produto têm em média 500 ml, com desvio padrão igual a 10 ml. Tendo sido encontradas no mercado algumas embalagens com menos de 500 ml, suspeita-se que a informação do fabricante seja falsa. Para verificar se isto ocorre, um fiscal analisa uma amostra de 200 embalagens escolhidas aleatoriamente no mercado e constata que as mesmas contêm em média 498 ml. Considerando-se um nível de significância de 5%, pode-se afirmar que o fabricante está mentindo? Calcule o valor da prova para esta amostra.
+```{r}
+mu <- 500
+sigma <- 10
+n <- 200
+xbarra <- 498
+alpha <- 0.05
+#Teste z
+#H0:mu=500ml
+#H1:mu<500ml (Unilateral a esquerda)
+#Estatística do Teste
+Zcal <- (xbarra-mu)/(sigma/sqrt(n))
+Zcal
+
+Ztab <- qnorm(alpha)
+Ztab
+
+ConclusaoZ <- ifelse(abs(Zcal)>abs(Ztab),paste("Como |Zcal|>|Ztab| Rejeita-se H0 ao nível de"
+, alpha ,"de significância"), paste("Como |Zcal|<|Ztab| Não Rejeita-se H0 ao nível de", alpha
+,"de significância"))
+ConclusaoZ
+
+
+```
+
+## Exercício 10
+A duração das lâmpadas produzidas por certo fabricante tem distribuição normal com média igual a 1200 horas e desvio padrão igual a 300 horas. O fabricante introduz um novo processo na produção das lâmpadas.Para verificar se o novo processo produz lâmpadas de maior duração, o fabricante observa 100 lâmpadas produzidas pelo novo processo e constata que as mesmas duram em média 1265 horas. Admitindo-se um nível de significância de 5%, pode-se concluir que o novo processo produz lâmpadas com maior duração?
+```{r}
+
+mu <- 1200
+sigma <- 300
+n <- 100
+xbarra <- 1265
+alpha <- 0.05
+#Teste z
+#H0:mu=1200h
+#H1:mu>1200h (Unilateral a direita)
+#Estatística do Teste
+Zcal <- (xbarra-mu)/(sigma/sqrt(n))
+Zcal
+
+Ztab <- qnorm(1-alpha)
+Ztab
+
+ConclusaoZ <- ifelse(abs(Zcal)>abs(Ztab),paste("Como |Zcal|>|Ztab| Rejeita-se H0 ao nível de"
+, alpha ,"de significância"), paste("Como |Zcal|<|Ztab| Não Rejeita-se H0 ao nível de", alpha
+,"de significância"))
+ConclusaoZ
+```
+
+## Exercício 11
+O custo de produção de certo artigo numa localidade tem distribuição normal com média igual a R$42, 00. Desenvolve-se uma política de redução de custos na empresa para melhorar a competitividade do referido produto no mercado. Observando-se os custos de 10 unidades deste produto, obtiveram-se os seguintes valores: 34, 41, 36, 41, 29, 32, 38, 35, 33 e 30. Admitindo-se um nível de significância de 5%, pode-se afirmar que o custo do produto considerado diminuiu?
+```{r}
+mu <- 42
+amostra =c(34, 41, 36, 41, 29, 32, 38, 35, 33, 30)
+media = mean(amostra)
+desvpad = sd(amostra)
+n = length(amostra)
+erropad = desvpad/sqrt(n)
+alpha <- 0.05
+#Teste T
+#H0:mu=42 (não houve diminuição no custo do produto considerado)
+#H1:mu<42 (Unilateral a esquerda)
+#Estatística do Teste
+Tcal <- (media-mu)/erropad
+Tcal
+glib = n-1
+
+pvalor <- pt(Tcal, glib)
+pvalor
+
+Conclusao <- ifelse(abs(alpha)>abs(pvalor),paste("Como |alpha|>|pvalor| Rejeita-se H0 ao nível de"
+, alpha ,"de significância"), paste("Como |alpha|<|pvalor| Não Rejeita-se H0 ao nível de", alpha
+,"de significância"))
+Conclusao
+
+```
+## Exercício 12
+O controle de qualidade das peças produzidas por certa fábrica exige que o diâmetro médio das mesmas seja 57 mm. Para verificar se o processo de produção está sob controle, observam-se os diâmetros de 10 peças, constatando-se os seguintes valores em mm: 56,5; 56,6; 57,3; 56,9; 57,1; 56,7; 57,1; 56,8; 57,1; 57,0. Admitindo-se um nível de significância de 5%, pode-se concluir que o processo de produção está sob controle?
+```{r}
+mu <- 57
+amostra =c(56.5, 56.6, 57.3, 56.9, 57.1, 56.7, 56.8, 57.1, 57)
+media = mean(amostra)
+desvpad = sd(amostra)
+n = length(amostra)
+erropad = desvpad/sqrt(n)
+alpha <- 0.05
+#Teste T
+#H0:mu=57 (o processo de produção está sob-controle)
+#H1:mu<57 ou mu>57 (bilateral)
+#Estatística do Teste
+Tcal <- (media-mu)/erropad
+Tcal
+glib = n-1
+
+pvalor <- pt(Tcal, glib)
+pvalor
+
+ConclusaoZ <- ifelse(abs(alpha/2)>abs(pvalor),paste("Como |alpha/2|>|pvalor| Rejeita-se H0 ao nível de"
+, alpha ,"de significância"), paste("Como |alpha/2|<|pvalor| Não Rejeita-se H0 ao nível de", alpha
+,"de significância"))
+ConclusaoZ
+```
+
+## Exercício 15
+Suponha que o tempo necessário para que estudantes completem uma prova tenha distribuição normal com média 90 minutos e desvio padrão 15 minutos.
+
+```{r}
+mu <- 90
+sigma <- 15
+#a) Qual é a probabilidade do estudante terminar a prova em menos de 80 minutos?
+pnorm(80, mean = 90, sd = 15)
+
+#b) Em mais de 120 minutos?
+1-pnorm(120, mean = 90, sd = 15)
+
+#c) Entre 75 e 85 minutos?
+pnorm(85, mean = 90, sd = 15) - pnorm(75, mean = 90, sd = 15)
+
+#d)  Qual é o tempo necessário para que 98% dos estudantes terminem a prova?
+var = pnorm(0.98)
+var
+resposta = var*sigma+mu
+resposta
+
+```
+## Exercício 16
+Uma v.a. X tem distribuição normal, com média 100 e desvio padrão 10.
+```{r}
+mu=100
+sigma=10
+#a) Qual a P(90 < X < 110)?
+#P=P(90<X<110)=P(-1<Z<1)=2*P(0<Z<1)
+P <- 2*(pnorm(1)-pnorm(0))
+P
+
+#b) Se X¯ for a média de uma amostra de 16 elementos retirados dessa população, calcule P(90 < X <¯ b) 110).
+#P=P(90<Xbarra<110)=P(-4<Z<4)=2*P(0<Z<4)
+P <- 2*(pnorm(4)-pnorm(0))
+P
+
+#d) Que tamanho deveria ter a amostra para que P(90 < X¯<110) = 0, 95?
+#P(90<Xbarra<110)=0.95=>P(-sqrt(n)<Z<sqrt(n))=0.95
+#=> P(0<Z<sqrt(n))=0.475
+#=>sqrt(n)=qnorm(p, lower.tail=FALSE)
+n <- (qnorm(0.025, lower.tail = FALSE))^2
+n <- round(n, digits = 0)
+n
+
+```
+## Exercício 17
+Nas situações abaixo, escolha como hipótese nula, H0, aquela que para você leva a um erro tipo I mais importante. Descreva quais os dois erros em cada caso.
+
+a) O trabalho de um operador de radar é detectar aeronaves inimigas. Quando surge alguma coisa estranha na tela, ele deve decidir entre as hipotéses: 
+1. está começando um ataque;
+2. tudo bem, apenas uma leve interferência.
+
+H0: está começando um ataque
+
+b) Num júri, um indivíduo está sendo julgado por um crime. As hipóteses sujeitas ao júri são:
+1. o acusado é inocente;
+2. o acusado é culpado.
+
+H0: o acusado é inocente
+
+c) Um pesquisador acredita que descobriu uma vacina contra resfriado. Ele irá conduzir uma pesquisa de laboratório para verificar a veracidade da afirmação. De acordo com o resultado, ele lançará ou não a vacina no mercado. As hipóteses que pode testar são:
+1. a vacina é eficaz;
+2. a vacina não é eficaz.
+
+H0: a vacina é eficaz
+
+
+## Exercício 18
+Uma fábrica de automóveis anuncia que seus carros consomem, em média, 11 litros por 100 km, com desvio padrão de 0,8 litros. Uma revista resolve testar essa afirmação e analisa 35 automóveis dessa marca, obtendo 11,3 litros por 100 km como consumo médio (considerar distribução normal). O que a revista pode concluir sobre o anúncio da fábrica, no nível de 10%?
+```{r}
+
+mu <- 11
+sigma <- 0.8
+n <- 35
+xbarra <- 11.3
+alpha <- 0.10
+#Teste z
+#H0:mu=11 (os carros consomem em média 11 litros por 100km)
+#H1:mu>11 (Unilateral a direita)
+#Estatística do Teste
+Zcal <- (xbarra-mu)/(sigma/sqrt(n))
+Zcal
+
+Ztab <- qnorm(1-alpha)
+Ztab
+
+Conclusao <- ifelse(abs(Zcal)>abs(Ztab),paste("Como |Zcal|>|Ztab| Rejeita-se H0 ao nível de"
+, alpha ,"de significância"), paste("Como |Zcal|<|Ztab| Não Rejeita-se H0 ao nível de", alpha
+,"de significância"))
+Conclusao
+
+```
+
+
+## Exercício 19
+Duas máquinas, A e B, são usadas para empacotar pó de café. A experiência passada garante que o desvio padrão para ambas é de 10 g. Porém, suspeita-se que elas têm médias diferentes. Para verificar, sortearam-se duas amostras: uma com 25 pacotes da máquina A e outra com 16 pacotes da máquina B. As médias foram, respectivamente, x¯A = 502, 74g e x¯B = 496, 60g. Com esses números, e com o nível de 5%, qual seria a coclusão do teste H0 : µA = µB?
+```{r}
+xAbarra <- 502.74
+xBbarra <- 496.6
+alpha <- 0.05
+nA <- 25
+nB <- 16
+sigma <- 10
+#H0:muA=muB
+#H1:muA!=muB
+#Estatística do Teste
+Zcal <- (xAbarra-xBbarra)/sqrt(sigma^2*((1/nA)+(1/nB)))
+Zcal
+
+Ztab <- qnorm(alpha/2)
+Ztab
+
+Conclusao <- ifelse(abs(Zcal)>abs(Ztab),paste("Como |Zcal|>|Ztab| Rejeita-se H0 ao nível de"
+, alpha ,"de significância"), paste("Como |Zcal|<|Ztab| Não Rejeita-se H0 ao nível de", alpha
+,"de significância"))
+Conclusao
+
+```
+
+## Exercício 20
+Uma fábrica de embalagens para produtos químicos está estudando dois processos para combater a corrosão de suas latas especiais. Para verificar o efeito dos tratamentos, foram usadas amostras cujos resultados estão no quadro abaixo (em porcentagem de corrosão eliminada). Qual seria a conclusão sobre os dois tratamentos?
+```{r}
+nA=15
+nB=12
+xBarraA=48
+xBarraB=52
+sA=10
+sB=15
+alpha=0.05
+#teste-F
+#H0:SigmaA^2=SigmaB^2
+#H1:SigmaA^2<SigmaB^2
+Fcal <- (sB^2)/(sA^2)
+Fcal
+
+Ftab <- qf(alpha,nB-1,nA-1)
+Ftab
+
+ConclusaoF <- ifelse(Fcal>Ftab,paste("Como Fcal>Ftab Rejeita-se H0 ao nível de", alpha ,"de s
+ignificância"), paste("Como Fcal<Ftab Não Rejeita-se H0 ao nível de", alpha ,"de significânci
+a"))
+ConclusaoF
+
+#teste-t
+#H0:muA=muB
+#H1:muA!=muB
+Tcal <- (xBarraA-xBarraB)/sqrt(((sA^2)/nA)+((sB^2)/nB))
+Tcal
+
+A <- (sA^2)/nA
+B <- (sB^2)/nB
+df <- ((A+B)^2)/(((A^2)/(nA-1))+((B^2)/(nB-1)))
+(df <- round(df, digits = 0))
+
+Ttab <- qt(alpha/2,df)
+Ttab
+
+ConclusaoT <- ifelse(abs(Tcal)>abs(Ttab),paste("Como |Tcal|>|Ttab| Rejeita-se H0 ao nível de"
+, alpha ,"de significância"), paste("Como |Tcal|<|Ttab| Não Rejeita-se H0 ao nível de", alpha
+,"de significância"))
+ConclusaoT
+```
+
+## Exercício 21
+Para investigar a infiuência da opção profissional sobre o salário inicial de recém-formados, investigaram-se dois grupos de profissionais: um de liberais em geral e outro de formandos em Administração de Empresas. Com os resultados abaixo, expressos em salários mínimos, quais seriam suas conclusões?
+```{r}
+Li <- c(6.6,10.3,10.8,12.9,9.2,12.3,7.0)
+Ad <- c(8.1,9.8,8.7,10.0,10.2,8.2,8.7,10.1)
+var(Li)
+
+var(Ad)
+
+#H0:Sigma2Li=Sigma2Ad
+#H1:Sigma2Li!=Sigma2Ad
+var.test(Li, Ad, alternative = "two.sided")
+
+
+```
+
+## Exercício 23
+Os dados abaixo referem-se a medidas de determinada variável em 19 pessoas antes e depois de uma cirurgia. Verifique se as medidas pré e pós-operatórias apresentam a mesma média. Que suposições você faria para resolver o problema?
+```{r}
+pre =c(50, 50, 50, 87.5, 32.5, 35, 40, 45, 62.5, 40, 50, 75, 92.5, 38, 46.5, 50, 30, 35, 39.4)
+pos =c(42, 42, 78, 33, 96, 82, 44, 31, 87, 50, 48, 52, 74, 47.5, 49, 58, 42, 60, 28)
+
+mediapre = mean(pre)
+mediapos = mean(pos)
+mediapre
+mediapos
+#H0:mupos=mupre
+#H1:mupre!=mupos
+t.test(pre, pos, alternative = "two.sided")
+
+```
+
+## Exercício 24
+Uma empresa deseja estudar o efeito de uma pausa de dez minutos para um cafezinho sobre a produtividade de seus trabalhadores. Para isso, sorteou seis operários, e contou o número de peças produzidas durante uma semana sem intervalo e uma semana com intervalo. Os resultados sugerem se há ou não melhora na produtividade? Caso haja melhora, qual deve ser o acréscimo médio de produção para todos os trabalhadores da fábrica?
+```{r}
+Si <- c(23,35,29,33,43,32)
+Ci <- c(28,38,29,37,42,30)
+#H0: muSi=muCi
+#H1: muSi!=muCi
+t.test(Si, Ci, alternative = "two.sided", paired = TRUE)
+```
+
+## Exercício 25
+Num levantamento feito com os operários da indústria mecânica, chegou-se aos seguintes números: salário médio = 3,64 salários mínimos e desvio padrão = 0,85 salário mínimo. Suspeita-se que os salários de subclasse formada pelos torneiros mecânicos são diferentes dos salários do conjunto todo, tanto na média como na variância. Que conclusões você obteria se uma amostra de 25 torneiros apresentasse salário médio igual a 4,22 salários mínimos e desvio padrão igual a 1,25 salário mínimo?
+```{r}
+mu <- 3.64
+sigma <- 0.85
+(var <- sigma^2)
+
+n <- 25
+xbarra <- 4.22
+sd <- 1.25
+#Consideremos alpha=0.05
+alpha=0.05
+#sigma2TM significa variancia populacional dos salarios dos torneiros mecanicos
+#H0: sigma2TM=0.7225
+#H1: sigma2TM!=0.7225
+(XiCal <- (n-1)*(sd^2)/var)
+
+(Xitab <- qchisq(alpha/2, df = (n-1), lower.tail = TRUE))
+
+(Xitab <- qchisq(alpha/2, df = (n-1), lower.tail = FALSE))
+
+#Conclusao: Como XiCal>Xitab, rejeita-se H0 ao nivel alpha=0.05 de significancia.
+#muTM eh a media populacional dos torneiros mecanicos
+#H0: muTM=3.64
+#H1: muTM!=3.64
+(Tcal <- (xbarra-mu)/(sd/sqrt(n)))
+
+(Ttab <- qt(alpha/2, n-1, lower.tail = FALSE))
+
+Conclusao <- ifelse(abs(Tcal)>abs(Ttab),paste("Como |Tcal|>|Ttab| Rejeita-se H0 ao nível de"
+, alpha ,"de significância"), paste("Como |Tcal|<|Ttab| Não Rejeita-se H0 ao nível de", alpha
+,"de significância"))
+Conclusao
+
+```
+
+## Exercício 28
+Para verificar o grau de adesão de uma nova cola para vidros, preparam-se dois tipos de montagem: cruzado (A), onde a cola é posta em forma de X, e quadrado (B), onde a cola é posta apenas nas quatro bordas. Os resultados da resistência para as duas amostras de 10 cada estão abaixo. Que tipo de conclusão poderia ser tirada?
+```{r}
+
+metodoA <- c(16,14,19,18,19,20,15,18,17,18)
+metodoB <- c(13,19,14,17,21,24,10,14,13,15)
+var(metodoA)
+
+var(metodoB)
+
+#H0:Sigma2metodoA=Sigma2metodoB
+#H1:Sigma2metodoA!=Sigma2metodoB
+var.test(metodoA, metodoB, alternative = "two.sided")
+
+```
+
+## Exercício 29
+Em um estudo para comparar os efeitos de duas dietas, A e B, sobre o crescimento, 6 ratos foram submetidos à dieta A, e 9 ratos à dieta B. Após 5 semanas, os ganhos em peso foram:
+```{r}
+#a) Admitindo que temos duas amostras independentes de populações normais, teste a hipótese de que não há diferença entre as duas dietas, contra a alternativa que a dieta A é mais eficaz, usando o teste t de Student, no nível de α = 0, 01.
+
+dietaA = c(15, 18, 12, 11, 14, 15)
+dietaB = c(11, 11, 12, 16, 12, 13, 8, 10, 13)
+mu <- mean(dietaB)
+media = mean(dietaA)
+desvpad = sd(dietaB)
+n = length(dietaB)
+erropad = desvpad/sqrt(n)
+alpha <- 0.05
+#Teste T
+#H0:MuDietaA=MuDietaB (não há diferença entre as duas dietas)
+#H1:MuDietaA!=MuDietaB (bilateral)
+#Estatística do Teste
+Tcal <- (media-mu)/erropad
+Tcal
+glib = n-1
+
+pvalor <- pt(Tcal, glib)
+pvalor
+
+Conclusao <- ifelse(abs(alpha/2)>abs(pvalor),paste("Como |alpha/2|>|pvalor| Rejeita-se H0 ao nível de"
+, alpha ,"de significância"), paste("Como |alpha/2|<|pvalor| Não Rejeita-se H0 ao nível de", alpha
+,"de significância"))
+Conclusao
+```
+
+## Exercício 31
+A distribuição dos pesos de coelhos criados numa granja pode muito bem ser representada por uma distribuição Normal, com média 5 kg e desvio padrão 0,9 kg. Um abatedouro comprará 5000 coelhos e pretende classificá-los de acordo com o peso do seguinte modo: 15% dos mais leves como pequenos, os 50% seguintes como médios, os 20% seguintes como grandes e os 15% mais pesados como extras. Quais os limites de peso para cada classificação?
+```{r}
+mu=5
+sigma=0.9
+#Se P(X<x1)=0.15, qual o valor de x1?
+(x1 <- qnorm(0.15, mean=5, sd=0.9))
+```
+
+## Exercício 32
+Uma enchedora automática de refrigerantes está regulada para que o volume médio de líquido em cada garrafa seja de 1000cm3 e desvio padrão de 10m3. Admita que o volume siga uma distribuição normal.
+```{r}
+
+#a) Qual é a porcentagem de garrafas em que o volume de líquido é menor que 990cm3?
+pnorm(990, mean=1000, sd=10)
+
+#b) Qual é a porcentagem de garrafas em que o volume de líquido não se desvia da média em mais do que dois desvios padrões?
+1-pnorm(990, mean=1000, sd=20)
+
+```
+
+## Exercício 33
+Uma empresa produz televisores de 2 tipos, tipo A (comum) e tipo B (luxo), e garante a restituição da quantia paga se qualquer televisor apresentar defeito grave no prazo de seis meses. O tempo para ocorrência de algum defeito grave nos televisores tem distribuição normal sendo que, no tipo A, com média de 10 meses e desvio padrão de 2 meses e no tipo B, com média de 11 meses e desvio padrão de 3 meses. Os televisores de tipo A e B são produzidos com lucro de 1200 u.m. e 2100 u.m. respectivamente e, caso haja restituição, com prejuízo de 2500 u.m. e 7000 u.m. Respectivamente.
+```{r}
+#a) Calcule as probabilidades de haver restituição nos televisores do tipo A e do tipo B.
+
+x = (6-10)/2
+x
+pRestA = pnorm(x)
+
+
+y = (6-11)/3
+y
+pRestB = pnorm(y)
+
+# A probabilidade de haver restituição nos televisores do tipo A e do tipo B,respectivamente, são 2,28% e 4,75%.
+
+#b) Calcule o lucro médio para os televisores do tipo A e para os televisores do tipo B.
+
+pNaoRestA = 1 - pRestA
+pNaoRestB = 1 - pRestB
+pNaoRestA
+pNaoRestB
+lucroMedioA = 1200 * pNaoRestA - 2500*pRestA
+lucroMedioB = 2100 * pNaoRestB - 7000*pRestB
+lucroMedioA
+lucroMedioB
+
+#c) Baseando-se nos lucros médios, a empresa deveria incentivar as vendas dos aparelhos do tipo A ou do tipo B?
+
+#A empresa deveria incentivar as vendas dos aparelhos do tipo B, pois o lucro Bé maior que o lucro médio de A.
+```
+
+## Exercício 34
+Um estudo comparou dois métodos (A e B) para ensinar matemática a alunos do primeiro grau. Após 10 semanas, o desempenho dos alunos foi avaliado em um teste. Teste a hipótese de que o método A resulta num melhor desempenho médio, ao nível α = 5%, com base nos resultados da tabela a seguir:
+
+```{r}
+
+mu <- 8.15
+media = 7.31
+desvpad = 1.15
+n = 10
+erropad = desvpad/sqrt(n)
+alpha <- 0.05
+#Teste T
+#H0:MuMetodoA=MuMetodoB (não há diferença entre os métodos A e B)
+#H1:MuMetodoA!=MuMetodoB (bilateral)
+#Estatística do Teste
+Tcal <- (media-mu)/erropad
+Tcal
+glib = n-1
+
+pvalor <- pt(Tcal, glib)
+pvalor
+
+Conclusao <- ifelse(abs(alpha/2)>abs(pvalor),paste("Como |alpha/2|>|pvalor| Rejeita-se H0 ao nível de"
+, alpha ,"de significância"), paste("Como |alpha/2|<|pvalor| Não Rejeita-se H0 ao nível de", alpha
+,"de significância"))
+Conclusao
+
+```
+
+## Exercício 35
+A lei trabalhista estabelece que o pagamento diário mínimo deve ser de 13, 20 U.M. (unidades monetárias). Assuma distribuição normal com desvio padrão igual a 2,0 U.M. Uma amostra aleatória de 40 trabalhadores de uma firma revelou média diária de 12,20 U.M .Esta firma deve ser acusada de estar infringindo a lei? Conclua a 1% de probabilidade.
+
+```{r}
+mu <- 13.2
+media = 12.2
+desvpad = 2
+n = 40
+erropad = desvpad/sqrt(n)
+alpha <- 0.01
+#Teste T
+#H0:mu=13.2 (a firma não está infringindo a lei)
+#H1:mu<13.2 ou mu>13.2 (bilateral)
+#Estatística do Teste
+Tcal <- (media-mu)/erropad
+Tcal
+glib = n-1
+
+pvalor <- pt(Tcal, glib)
+pvalor
+
+Conclusao <- ifelse(abs(alpha/2)>abs(pvalor),paste("Como |alpha/2|>|pvalor| Rejeita-se H0 ao nível de"
+, alpha ,"de significância"), paste("Como |alpha/2|<|pvalor| Não Rejeita-se H0 ao nível de", alpha
+,"de significância"))
+Conclusao
+
+```
+
+## Exercício 36
+A tabela a seguir mostra a frequência de acidentes automobilísticos por ano, de acordo som a faixa etária (idade) do motorista, para motoristas com idade inferior a 25 anos. Teste a hipótese de que o número de acidentes independe da idade, a 5% de probabilidade. Isto é, teste a hipótese de que o número anual de acidentes se distribui proporcionalmente nas faixas etárias.
+```{r}
+#H0: O numero de acidentes independe da faixa etaria
+#H1: Nao H0
+F0 <- c(8, 15, 13, 11, 8)
+p <- c(0.1, 0.2, 0.2, 0.25, 0.25)
+Xiquad <- chisq.test(F0, correct = FALSE, p=p)
+Xiquad$expected
+
+Xiquad
+
+#Conclusao: Como p-valor e maior do que alpha, nao rejeitamos H0. Ou seja, o numero de acidentes independe da faixa etaria.
+```
+
+## Exercício 37
+Uma indústria farmacêutica conduziu um estudo para avaliar o tempo médio em dias para recuperação dos efeitos da gripe. O estudo comparou o tempo de indivíduos que tomaram 500 mg diárias de vitamina C, contra indivíduos que não tomaram vitamina C (nenhum suplemento). Com base nos dados a seguir, conclua e interprete a 5% de probabilidade.
+```{r}
+mu <- 7.4
+media = 5.8
+desvpad = sqrt(2.9)
+n = 12
+erropad = desvpad/sqrt(n)
+alpha <- 0.05
+#Teste T
+#H0:MuSemSuplemento=MuComSuplemento (Não há diferença entre não tomar suplemento de vitamina c para quem toma.)
+#H1:MuSemSuplemento!=MuComSuplemento (bilateral)
+#Estatística do Teste
+Tcal <- (media-mu)/erropad
+Tcal
+glib = n-1
+
+pvalor <- pt(Tcal, glib)
+pvalor
+
+Conclusao <- ifelse(abs(alpha/2)>abs(pvalor),paste("Como |alpha/2|>|pvalor| Rejeita-se H0 ao nível de"
+, alpha ,"de significância"), paste("Como |alpha/2|<|pvalor| Não Rejeita-se H0 ao nível de", alpha
+,"de significância"))
+Conclusao
+```
+
+## Exercício 38
+Um pesquisa de opinião entrevistou 50 pessoas em dois distritos. O objetivo era verificar se a distribuição das opiniões era homogênea nos dois distritos. Com base nos dados da tabela, teste a hipótese de homogeneidade de opiniões usando α = 5%.
+```{r}
+F0 <- data.frame(Distrito=c("Distrito A", "Distrito B"), Sim=c(20,26), Indeciso=c(9,3), Nao=c
+(21,21), row.names = TRUE)
+F0
+
+Xiquad <- chisq.test(F0, correct = FALSE)
+Fe <- data.frame(Xiquad$expected)
+Fe
+
+#Conclusao: Nao rejeitamos H0 para todo e qualquer valor de alpha menor do que p-valor=0.1509.
+```
+
+## Exercício 39
+Uma associação comercial afirma que o número médio de dias de trabalho perdidos anualmente, devido a problemas de saúde, é igual a 60. Uma extensa campanha educacional visando a conscientizar os trabalhadores quanto a importância de uma alimentação balanceada, higiene pessoal, prática de esportes etc, foi conduzida com o intuito de melhorar este quadro. Um ano após esta campanha, um estudo com 30 trabalhadores forneceu média igual a 55 dias. Assuma que o número de dias de trabalho perdidos anualmente é normalmente distribuído com variância σ 2 = 275. Pede-se:
+```{r}
+mu <- 60
+media = 55
+desvpad = sqrt(275)
+n = 30
+erropad = desvpad/sqrt(n)
+alpha <- 0.01
+#Teste T
+#H0:mu=60 (a campanha educacional não foi eficaz)
+#H1:mu<60 (unilateral a esquerda)
+#Estatística do Teste
+Tcal <- (media-mu)/erropad
+Tcal
+glib = n-1
+
+pvalor <- pt(Tcal, glib)
+pvalor
+
+Conclusao <- ifelse(abs(alpha)>abs(pvalor),paste("Como |alpha|>|pvalor| Rejeita-se H0 ao nível de"
+, alpha ,"de significância"), paste("Como |alpha|<|pvalor| Não Rejeita-se H0 ao nível de", alpha
+,"de significância"))
+#a) Pode-se afirmar que a campanha foi eficaz ao nível de α = 1% de probabilidade?
+Conclusao
+
+#b) Para qual nível de significância se pode afirmar que a campanha educacional foi eficaz?
+var = pnorm(0.99)
+var
+resposta = var*sigma+mu
+resposta
+
+
+```
+
+## Exercício 40
+Um gerente comercial acredita que um número excessivo de horas estejam sendo desperdiçadas em contatos comerciais, via telefone, entre os seus vendedores e os clientes em potencial. Ele deseja no máximo quinze horas por semana por vendedor. Este gerente comercial contratou uma empresa especializada para treinar seus vendedores. Após este treinamento, uma amostra de 36 vendedores revelou média igual a 17h por semana por vendedor. O que pode ser concluído quanto a eficácia do treinamento? Assuma σ 2 = 9 e utilize α = 5%.
+```{r}
+mu <- 15
+sigma <- sqrt(9)
+n <- 36
+xbarra <- 17
+alpha <- 0.05
+#Teste z
+#H0:mu=15 (o treinamento foi eficaz)
+#H1:mu>15 (Unilateral a direita)
+#Estatística do Teste
+Zcal <- (xbarra-mu)/(sigma/sqrt(n))
+Zcal
+
+Ztab <- qnorm(1-alpha)
+Ztab
+
+Conclusao <- ifelse(abs(Zcal)>abs(Ztab),paste("Como |Zcal|>|Ztab| Rejeita-se H0 ao nível de"
+, alpha ,"de significância"), paste("Como |Zcal|<|Ztab| Não Rejeita-se H0 ao nível de", alpha
+,"de significância"))
+Conclusao
+```
+
+## Exercício 41
+Com base em dados obtidos de 400 mulheres, apresentados na tabela abaixo, pode-se concluir que o nível educacional e a adaptação à vida conjugal são independentes? Conclua a 5% de probabilidade.
+```{r}
+adaptacao <- c((18+17+11)/3, (29+28+10)/3, (70+30+11)/3, (115+41+20)/3)
+nivelEducacional <- c((18+29+70+115)/4, (17+28+30+41)/4, (11+10+11+20)/4)
+#H0:Sigma2Li=Sigma2Ad
+#H1:Sigma2Li!=Sigma2Ad
+var.test(adaptacao, nivelEducacional, alternative = "two.sided")
+#R: não, pois há 70% de relação entre o nível educaional e a adaptação à vida conjugal.
+
+```
+
+## Exercício 42
+Uma cooperativa de produtores possui uma máquina de encher vasilhame com um litro de leite. Para assegurar que em média cada vasilhame não terá leite a mais e nem a menos, o responsável pelo controle de qualidade amostra, semanalmente, 75 vasilhames enchidos pela máquina. Se uma amostra fornecer 63, 97 litros e desvio padrão s = 0, 25 litros, deve-se parar a máquina para regulagem ou continuar a produção? Qual deve ser o procedimento adotado a α = 5% de probabilidade?
+```{r}
+mu <- 75
+media = 63.97
+desvpad = 0.25
+n = 75
+erropad = desvpad/sqrt(n)
+alpha <- 0.05
+#Teste T
+#H0:mu=75 (deve-se continuar a produção)
+#H1:mu<75 (unilateral a esquerda)
+#Estatística do Teste
+Tcal <- (media-mu)/erropad
+Tcal
+glib = n-1
+
+pvalor <- pt(Tcal, glib)
+pvalor
+
+Conclusao <- ifelse(abs(alpha)>abs(pvalor),paste("Como |alpha|>|pvalor| Rejeita-se H0 ao nível de"
+, alpha ,"de significância"), paste("Como |alpha|<|pvalor| Não Rejeita-se H0 ao nível de", alpha
+,"de significância"))
+#a)
+Conclusao
+
+```
+
+## Exercício 43
+A renda média de famílias com 4 pessoas na região sudeste do Brasil, no ano de 1975, era de 5 U.M. Economistas acreditam que atualmente a renda média é maior. Pede-se,
+```{r}
+
+#a) Quais seriam as hipóteses estatísticas (H0eHa), para se tentar provar que atualmente a renda média é maior do que em 1975?
+
+#H0: a renda média de famílias com 4 pessoas na região sudeste do Brasil não mudou nos dias atuais em relação ao ano de 1975
+
+#H1: a renda média de famílias com 4 pessoas na região sudeste do Brasil aumentou nos dias atuais em relação ao ano de 1975
+
+#b) Quais são as informações necessárias para se realizar um teste t?
+
+#TESTE T: refere-se a um tipo de teste paramétrico que é aplicado para identificar como as médias de dois conjuntos de dados diferem umas das outras quando a variação não é dada. É baseado em distribuição t de Student, tem uma variação populacional desconhecida e possui um tamanho de amosstra pequena.
+
+#x é a média da amostra
+#s é desvio padrão da amostra
+#n é o tamanho da amostra
+#μ é a média da população
+
+#c) Quais são as informações necessárias para se realizar um teste Z?
+
+#TESTE Z: O teste Z implica um teste de hipótese que verifica se os meios de dois conjuntos de dados são diferentes um do outro quando a variação é dada. É baseado em distribuição normal, possui uma variação populacional conhecida e tem o tamanho da amostra ampla.
+
+#x é a média da amostra
+#σ é desvio padrão populacional
+#n é o tamanho da amostra
+#μ é a média da população
+
+#d) Explique os dois possíveis erros (erro tipo I e erro tipo II) de decisão que podem ocorrer neste exemplo?
+
+#TIPO I: as estatísticas estariam erradas em relação ao salário de pessoas pobres refletindo a um cenário de desigualdade e desinformação no país.
+
+#TIPO II: a situação no país melhorou apesar de não ter sido possível coletar dados estatísticos suficientes para observar este fato, e seria mais interessante de acontecer.
+
+```
+
+## Exercício 44
+Assuma que o consumo mensal per capita de determinado produto tem distribuição normal com desvio padrão igual a 5 kg. Com a atual crise (do dólar, do apagão, do futebol...várias opções!) o departamento de vendas da fábrica decidiu que irá retirar o produto do mercado, caso o consumo médio (µ) per capita seja inferior a 10kg. Se uma pesquisa de mercado, com uma amostra de 100 indivíduos, revelar consumo médio mensal per capita de 9 kg, pede-se: Qual deve ser a afirmação, ao nível de significância de 1, 5%?
+```{r}
+mu <- 10
+media = 9
+desvpad = 5
+n = 100
+erropad = desvpad/sqrt(n)
+alpha <- 0.15
+#Teste T
+#H0:mu=10 (mesmo com a crise o consumo per capita do produto se manteve no mesmo patamar)
+#H1:mu<10 (unilateral a esquerda)
+#Estatística do Teste
+Tcal <- (media-mu)/erropad
+Tcal
+glib = n-1
+
+pvalor <- pt(Tcal, glib)
+pvalor
+
+Conclusao <- ifelse(abs(alpha)>abs(pvalor),paste("Como |alpha|>|pvalor| Rejeita-se H0 ao nível de"
+, alpha ,"de significância"), paste("Como |alpha|<|pvalor| Não Rejeita-se H0 ao nível de", alpha
+,"de significância"))
+#a)
+Conclusao
+```
+
+## Exercício 45
+No quadro abaixo estão as opiniões, com respeito ao desempenho e a potência do motor, de proprietários de veículos de um determinado fabricante. As opiniões foram classificadas pela idade do proprietário.
+```{r}
+jovem <- c(30, 20)
+experiente <- c(20, 30)
+#H0:Sigma2Li=Sigma2Ad
+#H1:Sigma2Li!=Sigma2Ad
+var.test(jovem, experiente, alternative = "two.sided")
+
+#O que pode ser afirmado quanto à seguinte hipótese de nulidade?
+
+#Pode-se ser afirmado que não há diferença
+
+```
+
+## Exercício 46
+Para comparar duas marcas de pará-choques, montaram-se seis de cada marca em 12 carros compactos, fazendo-se cada carro colidir com um muro de concreto, a uma velocidade de 40 km por hora. Registraram-se os seguintes custos de reparo:
+```{r}
+A = c(320, 310, 380, 360, 320, 345)
+B = c(305, 290, 340, 315, 280, 305)
+mu <- mean(B)
+media = mean(A)
+desvpad = sd(B)
+n = 12
+erropad = desvpad/sqrt(n)
+alpha <- 0.05
+#Teste T
+#H0:MuA=MuB (não há diferença entre os custos médios de reparos dos para-choques)
+#H1:MuA!=MuB (bilateral)
+#Estatística do Teste
+Tcal <- (media-mu)/erropad
+Tcal
+glib = n-1
+
+pvalor <- pt(Tcal, glib)
+pvalor
+
+Conclusao <- ifelse(abs(alpha/2)>abs(pvalor),paste("Como |alpha/2|>|pvalor| Rejeita-se H0 ao nível de"
+, alpha ,"de significância"), paste("Como |alpha/2|<|pvalor| Não Rejeita-se H0 ao nível de", alpha
+,"de significância"))
+Conclusao
+```
+
+## Exercício 47
+Se um dado não é viciado cada uma das seis faces ocorre com igual probabilidade. Um determinado dado foi lançado 720 vezes, obtendo-se:
+```{r}
+freq <- c(129, 107, 98, 132, 136, 118)
+#H0: O dado não está viciado
+#H1: Nao H0
+p <- c(1/6, 1/6, 1/6, 1/6, 1/6, 1/6)
+Xiquad <- chisq.test(freq, correct = FALSE, p=p)
+Xiquad$expected
+
+Xiquad
+
+# O dado será considerado viciado para qual nível de significância?
+#Conclusao: O dado será viciado para o nível de significancia igual a: 0.09127*2 = 0.18254.
+
+```
+
+## Exercício 48
+O tempo médio, por operário, para executar uma tarefa, tem sido 100 minutos. Introduziu-se uma modificação para diminuir esse tempo, e, após certo período, sorteou-se uma amostra de 16 operários, medindo-se o tempo de execução de cada um. O tempo médio da amostra foi 85 minutos, e o desvio padrão foi 12 minutos. Estes resultados trazem evidências estatísticas da melhora desejada, considerando α = 5%? Apresente as suposições teóricas usadas para resolver problema.
+
+```{r}
+mu <- 100
+media = 85
+desvpad = 12
+n = 16
+erropad = desvpad/sqrt(n)
+alpha <- 0.05
+#Teste T
+#H0:mu=100 (a modificação não trouxe a melhora desejada)
+#H1:mu<100 (unilateral a esquerda)
+#Estatística do Teste
+Tcal <- (media-mu)/erropad
+Tcal
+glib = n-1
+
+pvalor <- pt(Tcal, glib)
+pvalor
+
+Conclusao <- ifelse(abs(alpha)>abs(pvalor),paste("Como |alpha|>|pvalor| Rejeita-se H0 ao nível de"
+, alpha ,"de significância"), paste("Como |alpha|<|pvalor| Não Rejeita-se H0 ao nível de", alpha
+,"de significância"))
+#a)
+Conclusao
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

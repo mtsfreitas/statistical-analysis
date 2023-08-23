@@ -1,0 +1,544 @@
+---
+title: "Matheus3031"
+author: "Matheus Freitas Martins"
+date: "02/09/2021"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+options(warn=-1)
+suppressMessages(library(tidyverse))
+library(tidyverse)
+library(esquisse)
+library(stringr)
+df <- readRDS("censo.Rds")
+
+```
+
+## Idade média dos estudantes de cada curso que cursam a disciplina MAF105
+
+```{r}
+
+tb = select(df, CURSO, IDADE)
+tb = filter(tb, CURSO == "AGRONOMIA")
+
+tb %>%
+  group_by(IDADE) %>%
+  summarize(n())
+
+tbAgro = mean(tb$IDADE)
+tbAgro = format(tbAgro, digits=2, nsmall=2)
+#tbAgro = as.double(tbAgro)
+
+##########################
+
+tb = select(df, CURSO, IDADE)
+tb = filter(tb, CURSO == "ADMINISTRACAO")
+
+tb %>%
+  group_by(IDADE) %>%
+  summarize(n())
+
+tbADM = mean(tb$IDADE)
+tbADM = format(tbADM, digits=2, nsmall=2)
+#tbADM = as.double(tbADM)
+
+##########################
+
+tb = select(df, CURSO, IDADE)
+tb = filter(tb, CURSO == "CIENCIA DA COMPUTACAO", !is.na(IDADE))
+
+tb %>%
+  group_by(IDADE) %>%
+  summarize(n())
+
+tbComput = mean(tb$IDADE)
+tbComput = format(tbComput, digits=2, nsmall=2)
+#tbComput = as.double(tbComput)
+
+##########################
+
+tb = select(df, CURSO, IDADE)
+tb = filter(tb, CURSO == "ENGENHARIA DE ALIMENTOS")
+
+tb %>%
+  group_by(IDADE) %>%
+  summarize(n())
+
+tbAlimentos = mean(tb$IDADE)
+tbAlimentos = format(tbAlimentos, digits=2, nsmall=2)
+#tbAlimentos = as.double(tbAlimentos)
+
+##########################
+
+tb = select(df, CURSO, IDADE)
+tb = filter(tb, CURSO == "EDUCACAO FISICA", !is.na(IDADE))
+
+tb %>%
+  group_by(IDADE) %>%
+  summarize(n())
+
+tbEdFisica = mean(tb$IDADE)
+tbEdFisica = format(tbEdFisica, digits=2, nsmall=2)
+#tbEdFisica = as.double(tbEdFisica)
+
+##########################
+
+tb = select(df, CURSO, IDADE)
+tb = filter(tb, CURSO == "GESTAO AMBIENTAL", !is.na(IDADE))
+
+tb %>%
+  group_by(IDADE) %>%
+  summarize(n())
+
+tbGestao = mean(tb$IDADE)
+tbGestao = format(tbGestao, digits=2, nsmall=2)
+#tbGestao = as.double(tbGestao)
+
+#########################
+
+tb = select(df, CURSO, IDADE)
+tb = filter(tb, CURSO == "QUIMICA", !is.na(IDADE))
+
+tb %>%
+  group_by(IDADE) %>%
+  summarize(Total=n())
+
+tbQuim = mean(tb$IDADE)
+tbQuim = format(tbQuim, digits=2, nsmall=2)
+#tbQuim = as.double(tbQuim)
+
+#########################
+
+
+tb = select(df, CURSO, IDADE)
+tb = filter(tb, CURSO == "CIENCIAS BIOLOGICAS", !is.na(IDADE))
+
+tb %>%
+  group_by(IDADE) %>%
+  summarize(Total=n())
+
+tbBIO = mean(tb$IDADE)
+tbBIO = format(tbBIO, digits=2, nsmall=2)
+#tbBIO = as.double(tbBIO)
+
+#########################
+
+tb = select(df, CURSO, IDADE)
+tb = filter(tb, CURSO == "FISICA", !is.na(IDADE))
+
+tb %>%
+  group_by(IDADE) %>%
+  summarize(Total=n())
+
+tbFis = mean(tb$IDADE)
+tbFis = format(tbFis, digits=2, nsmall=2)
+#tbFis = as.double(tbFis)
+
+#########################
+
+tb = select(df, CURSO, IDADE)
+tb = filter(tb, CURSO == "MATEMATICA", !is.na(IDADE))
+
+tb %>%
+  group_by(IDADE) %>%
+  summarize(Total=n())
+
+tbMat = mean(tb$IDADE)
+tbMat = format(tbMat, digits=2, nsmall=2) #obs: converte float para string
+#tbMat = as.double(tbMat) #convertendo para float novamente
+
+#########################
+
+
+rotulo <-c("Agronomia", "Administracao", "C. da Computacao", "Eng.de Alimentos", "Educacao Fisica", "Gest. Ambiental", "Quimica", "C. Biologicas", "Física", "Matematica")
+mediaIdade <-c(tbAgro, tbADM, tbComput, tbAlimentos, tbEdFisica, tbGestao, tbQuim, tbBIO, tbFis, tbMat) 
+
+dadosIdade <- data.frame(
+  group=rotulo, 
+  value=mediaIdade
+)
+
+dadosIdade %>% ggplot(aes(y=mediaIdade, x=rotulo, fill = rotulo)) +
+  geom_col(show.legend = FALSE) + 
+  geom_text(aes(label=mediaIdade), vjust=-0.5)+
+  xlab("Cursos")+
+  ylab("Média de idades")+
+  ggtitle("Média de idade dos estudantes em relação a seus cursos",subtitle = "Ordenado em ordem alfabética pelo nome dos cursos")+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1), 
+       plot.title = element_text(hjust = 0.5))
+ 
+
+
+
+```
+
+Com base nos dados da idade média dos alunos de cada curso, podemos notar que há uma preferência dos jovens pelo curso de Ciência da Computação, isso se da possivelmente pela forte tendência do mercado dos últimos anos. Em contrapartida, Agronomia é o curso preferido das pessoas mais velhas, o que pode significar que possivelmente estão procurando uma recolocação de mercado.
+
+## Quantidade de alunos dos cursos que NÃO RESPONDERAM a idade
+```{r}
+
+tb = select(df, CURSO, IDADE)
+tb = filter(tb, is.na(IDADE))
+
+tb <- tb %>%
+  group_by(CURSO) %>%
+  summarize(Total=n())
+
+print(tb)
+
+pie_labels <- paste0(tb$CURSO, ": ", tb$Total)
+
+pie(table(tb), col=c("blue", "red"), labels=pie_labels, main = "Alunos dos cursos que não responderam a idade")
+
+```
+
+Com base nesses dados do gráfico de pizza, podemos ver que apenas 1 dentre os 20 estudantes do curso de Ciência da Computação e 1 dentre os 40 estudantes do curso de Educação Física não se sentiram a vontade ou não quiseram responder suas respectivas idades no formulário de pesquisa.
+
+## Quantidade de alunos dos cursos que RESPONDERAM a idade
+
+```{r}
+tb = select(df, CURSO, IDADE)
+tb = filter(tb, !is.na(IDADE))
+
+tb <- tb %>%
+  group_by(CURSO) %>%
+  summarize(Total=n())
+
+print(tb)
+
+tb %>% ggplot(aes(reorder(CURSO, -Total), Total, fill=CURSO)) +
+  geom_col(show.legend = FALSE) +
+  geom_text(aes(label=Total), vjust=-0.5)+
+  ylim(0,50)+
+  labs(
+    x = "Idades",
+    y = "QUantidade de Estudantes",
+    title = "Quantidade de alunos dos cursos que responderam a idade",
+    caption = "Autor: Matheus Freitas Martins"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        plot.title = element_text(hjust = 0.5))
+
+```
+
+Com base no gráfico de barras acima, podemos ver que praticamente todos os alunos da disciplina de Estatística responderam suas respectivas idades. Vale ressaltar que, conforme observado no gráfico de pizza anteriormente. nota-se que está faltando a resposta de apenas 2 alunos (1 do curso de Ciência da Computação e 1 do curso de Educação Física).
+
+## Relação das idades dos estudantes que disseram possuir FACILIDADE com Exatas
+
+```{r}
+tb = select(df, FACILIDADEEXATAS, IDADE)
+tb = filter(tb, FACILIDADEEXATAS == "SIM", !is.na(IDADE))
+
+tb <- tb %>%
+  group_by(IDADE) %>%
+  summarize(Total=n())
+
+tb <- tb %>% filter(!is.na(IDADE))
+tb$IDADE <- as.factor(tb$IDADE)
+
+print(tb)
+
+tb %>% ggplot(aes(reorder(IDADE, -Total), Total, fill=IDADE)) +
+  geom_col(show.legend = FALSE) +
+  geom_text(aes(label=Total), vjust=-0.5)+
+  xlab("Idades")+
+  ylab("Quantidade de alunos")+
+  ggtitle("Quantidade de idades dos estudantes com FACILIDADE com Exatas")+ theme(plot.title = element_text(hjust = 0.5))
+
+
+```
+
+Em relação a este gráfico, podemos observar que de 19 até 26 anos, há uma pequena parcela de estudantes da disciplina que possuem facilidade com a área de Exatas. Nota-se que existe um decaimento sobre a facilidade conforme mais velho o estudante seja.
+
+## Relação das idades dos estudantes que disseram possuir DIFICULDADE com Exatas
+
+```{r}
+tb = select(df, FACILIDADEEXATAS, IDADE)
+tb = filter(tb, FACILIDADEEXATAS == "NAO", !is.na(IDADE))
+
+tb <- tb %>%
+  group_by(IDADE) %>%
+  summarize(Total=n())
+
+tb <- tb %>% filter(!is.na(IDADE))
+tb$IDADE <- as.factor(tb$IDADE)
+
+print(tb)
+
+tb %>% ggplot(aes(reorder(IDADE, -Total), Total, fill=IDADE)) +
+  geom_col(show.legend = FALSE) +
+  geom_text(aes(label=Total), vjust=-0.5)+
+  xlab("Idades")+
+  ylab("Quantidade de alunos")+
+  ggtitle("Quantidade de idades dos estudantes com DIFICULDADE com Exatas")+ theme(plot.title = element_text(hjust = 0.5))
+```
+
+Tendo em vista o gráfico anterior, este corrobora a ideia de que pessoas mais velhas possuem uma maior dificuldade com a área de Exatas. Por outro lado, podemos notar que a quantidade de jovens com dificuldade nessa área corresponde a maioria em relação a estudantes que possuem facilidade.
+
+## Provedores de emails utilizados pelos estudantes
+
+```{r}
+tb <- df %>% 
+  group_by(PROVEDOR) %>% 
+  summarise(Total=n())
+
+print(tb)
+
+tb %>% ggplot(aes(reorder(PROVEDOR,Total), Total, fill=PROVEDOR)) +
+  geom_col(show.legend = FALSE) + 
+  geom_text(aes(label=Total), vjust=-0.5)+
+  ylim(0,80)+
+  theme_gray()+
+  xlab("Provedor Utilizado pelos Estudantes de Estatística")+
+  ylab("Quantidade de Estudantes")+
+  ggtitle("Provedor utilizado em relação a quantidade de estudantes")+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        plot.title = element_text(hjust = 0.5))
+
+```
+
+Com base no dados apresentados, a grande maioria dos estudantes tem preferencia em utilizar os provedores UFV (oficial da instituição) e GMAIL (popular) respectivamente. Há uma pequena parcela de dois estudantes, que utilizam emails não convencionais atualmente, o que pode ser um índicio que são pessoas mais velhas o utilizem.
+
+## Quantidade de alunos em relação as faixas de idades
+
+```{r}
+
+tb <- df %>% 
+  group_by(IDADE) %>% 
+  summarise(Total=n())
+
+tb <- tb %>% filter(!is.na(IDADE))
+tb$IDADE <- as.factor(tb$IDADE)
+
+print(tb)
+
+tb %>% ggplot(aes(IDADE, Total, fill=IDADE)) +
+  geom_col(show.legend = FALSE) + 
+  geom_text(aes(label=Total), vjust=-0.5)+
+  ylim(0,30)+
+  theme_gray()+
+  xlab("Idade dos Estudantes de Estatística")+
+  ylab("Quantidade de Estudantes")+
+  ggtitle("Quantidade de alunos em relação a faixa de idades")+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        plot.title = element_text(hjust = 0.5))
+
+```
+
+Por meio deste gráfico, podemos observar detalhadamente a idade dos alunos que compõem a disciplina de Estatística. Vale destacar que a grande maioria é composta por alunos de 19 a 22 anos. Sendo que a partir de 27 anos a tendência é que haja menos estudantes. Um outro fato que podemos extrair deste gráfico é que as pessoas conseguem em sua maioria ingressar cedo na faculdade. Além disso, pessoas acima dos 30 anos, ainda estão dispostas a estudar em uma universidade federal.
+
+## Relação de cidades com 10 ou mais alunos
+
+```{r}
+df$RESIDENCIA <- stringr::str_trim(df$RESIDENCIA)
+
+tb <- df %>% 
+  group_by(RESIDENCIA) %>% 
+  summarise(Total=n())
+
+tb <- tb %>% filter(Total>=10)
+
+print(tb)
+
+tb %>% ggplot(aes(reorder(RESIDENCIA, Total), Total, fill=RESIDENCIA)) +
+  geom_col(show.legend = FALSE) + 
+  geom_text(aes(label=Total), hjust=-0.5)+
+  xlab("Quantidade de moradores")+
+  ylab("Cidades")+
+  ggtitle("Cidades com mais de um estudante")+
+  coord_flip()+
+  annotate("text", x=4, y=20,label="Alto risco de aglomeração de estudantes")
+
+```
+
+Com base neste gráfico, nota-se que Florestal é a cidade que possui um maior número de estudantes matriculados que residem em uma mesma cidade. É interessante notar que as cidades mais próximas estão na sequência, como Pará de Minas, Betim e Belo Horizonte. Essa proximidade indica que as pessoas preferem estudar em uma faculdade mais próxima, assim, elas podem ir e voltar para a casa em um curto espaço de tempo. Vale ressaltar também que, Florestal é a cidade com maior risco de alunos se reunirem para fazer uma aglomeração.
+
+## Relação de cidades com menos de 10 alunos
+```{r}
+df$RESIDENCIA <- stringr::str_trim(df$RESIDENCIA)
+
+tb <- df %>% 
+  group_by(RESIDENCIA) %>% 
+  summarise(Total=n())
+
+tb <- tb %>% filter(Total<10)
+
+print(tb)
+
+tb %>% ggplot(aes(reorder(RESIDENCIA, Total), Total, fill=RESIDENCIA)) +
+  geom_col(show.legend = FALSE) + 
+  geom_text(aes(label=Total), hjust=-0.5)+
+  xlab("Cidades")+
+  ylab("Quantidade de moradores")+
+  ggtitle("Cidades menos de 10 estudantes")+
+  coord_flip()
+
+```
+
+Analisando o respectivo gráfico, podemos notar que existem muitas cidades que possuem apenas 1 aluno matriculado na disciplina. Isso pode ter haver com a distância em relação a Florestal. Portanto, não há índicios que esses alunos possam se aglomerar com outros alunos do curso. Em relação as cidades mais próximas, como Contagem e Juatuba, podemos notar que são cidades vizinhas a Florestal e que possuem um maior volume de estudantes em comparação com os demais.
+
+
+## Quantidade de estudantes por cada curso do campus Florestal da UFV
+
+```{r}
+tb <- df %>% 
+  group_by(CURSO) %>% 
+  summarise(Total=n())
+
+print(tb)
+
+tb %>% ggplot(aes(reorder(CURSO, Total), Total, fill=CURSO)) +
+  geom_col(show.legend = FALSE) + 
+  geom_text(aes(label=Total), vjust=-0.5)+
+  ylim(0,50)+
+  theme_gray()+
+  xlab("Cursos dos Estudantes de Estatística")+
+  ylab("Quantidade de Estudantes")+
+  ggtitle("Relação de cursos por estudantes")+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        plot.title = element_text(hjust = 0.5))
+
+
+```
+
+Por meio deste gráfico, é possível notar que existe 10 cursos diferentes realizando a mesma disciplina, o que indica ser uma turma muito eclética. Possui em sua maioria estudantes do curso de educação física. Observando isso, podemos notar que não é uma disciplina com o oferecimento para alunos do curso de matemática neste semestre, pois existe apenas 1 aluno. No entanto, pelo alto número de estudantes de educação física, indica que essa disciplina seja ofertada sempre em semestres ímpares.
+
+
+## Quantidade de estudantes por estados situados no Brasil
+
+```{r}
+tb <- df %>% 
+  group_by(ESTADO) %>% 
+  summarise(Total=n())
+
+print(tb)
+
+tb %>% ggplot(aes(reorder(ESTADO, Total), Total, fill=ESTADO)) +
+  geom_col(show.legend = FALSE) + 
+  geom_text(aes(label=Total), vjust=-0.5)+
+  theme_gray()+
+  xlab("Cursos dos Estudantes de Estatística")+
+  ylab("Quantidade de Estudantes")+
+  ggtitle("Relação do número de estudantes por Estado")+
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        plot.title = element_text(hjust = 0.5))
+
+
+```
+
+Tendo em vista que o campus de Florestal está localizado no estado de Minas Gerais, e observando o gráfico faz sentido que a maioria dos alunos resida em Minas Gerais. No entanto, existe alunos que estão morando em outros estados. O que indica flexibilidade dos estudos que o ensino remoto proporcionou.
+
+
+## Histograma dos Semestres
+
+```{r}
+hist(df$SEMESTRE, main = "Histograma em relação ao semestre em curso dos alunos", xlab = "Semestres", ylab = "Quantidade", col="red")
+
+```
+
+Analisando o histograma, podemos notar que a turma aparentemente é composta por um grande número de pessoas calouras e veternas. Tendo em vista que a maiorida das pessoas estão realizando a disciplina pela primeira vez, nota-se que algumas delas escolheram realizar a disciplina tardiamente ou que foram reprovadas em cálculo 1.
+
+## Boxplot dos Semestres
+
+```{r}
+boxplot(df$SEMESTRE, col="red", ylab="Semestres")
+```
+
+Por meio deste gráfico de boxplot, nota-se que a relação de estudantes com o número período total de períodos cursados. Se concentram aproxidamente no quinto período. O que indica uma possível relação que muitos alunos estão reprovando em Cálculo 1, uma disciplina com alto índice de reprovação e que é pré-requisito de estatística.
+
+
+## Histograma das idades
+
+```{r}
+hist(df$IDADE, main = "Histograma das idades dos alunos", xlab = "Idades", ylab = "Quantidade", col="green")
+```
+
+A partir deste histograma, fica evidente que podemos identificar que a maioria dos alunos jovens com menos de 25 anos. Poderia ter alguma correlação com a idade com as pessoas que ingressam nas faculdades no Brasil atualmente.
+
+## Boxplot das Idades
+
+```{r}
+boxplot(df$IDADE, col="green", main="Idade dos alunos do curso", ylab="Idades")
+```
+
+Analisando o boxplot de idade dos alunos, percebe-se que a maioria dos alunos é composta por jovens, com menos de 30 anos. Os outliers indicam que há uma pequena parcela de pessoas que estão acima da casa dos 30 anos. A variação indica que a maioria dos alunos estão entre aproxidamente 20 e 30 anos.
+
+
+## Quantidade de vezes que um estudante está cursando a disciplina
+```{r}
+tb <- df %>% 
+  group_by(PRIMEIRAVEZ) %>% 
+  summarise(Total=n())
+
+print(tb)
+
+pie_labels <- paste(tb$PRIMEIRAVEZ, ": ", tb$Total)
+
+pie(table(df$PRIMEIRAVEZ), col=c("blue", "red", "green"), labels=pie_labels, main = "Nº de vezes que os estudantes estão cursando a disciplina")
+```
+
+Podemos notar que a grande maioria da turma é composta por pessoas que estão fazendo pela primeira vez a disciplina, totalizando 118 alunos. Em contrapartida, há 23 alunos repetentes, sendo que 21 estão realizando pela segunda vez e apenas 2 estão realizando pela terceira vez. 
+
+## Quantidade de estudantes que possuem facilidade ou dificuldade com Exatas
+```{r}
+tb <- df %>% 
+  group_by(FACILIDADEEXATAS) %>% 
+  summarise(Total=n())
+
+print(tb)
+
+pie_labels <- paste(tb$FACILIDADEEXATAS, ": ", tb$Total)
+
+
+pie(table(df$FACILIDADEEXATAS), col=c("blue", "red"), labels=pie_labels, main = "Possui facilidade com exatas?")
+```
+
+Nota-se que a maioria dos estudantes não possuem tanta facilidade com a área de exatas. De 141 alunos, apenas 51 dizem possuir facilidade. O que indica o motivo dos alunos terem uma maior dificuldade com a disciplina, fazendo com que eles perguntem mais nas aulas da disciplina de estatística.
+
+
+## Opnião em relação aos períodos remotos
+
+```{r}
+tb <- df %>% 
+  group_by(OPINIAOPERIODOSREMOTOS) %>% 
+  summarise(Total=n())
+
+print(tb)
+
+rotulos <- c("EM GERAL, PRESENCIAL: ", "EM GERAL, REMOTO: ", "INDIFERENTE: ", "PRESENCIAL: ", "REMOTO: ")
+legenda <- paste(rotulos, c(tb$Total))
+
+pie(table(df$OPINIAOPERIODOSREMOTOS), col=c("cyan", "red", "green", "yellow", "purple"), labels=legenda, main = "Preferência em relação ao modelo de estudos")
+
+
+```
+
+Em relação a opinião dos estudantes a respeito do modelo de ensino, a maior preferência diz respeito a modalidade presencial (63) em relação ao modelo de ensino remoto (20). Mais da metade possui a preferência pelo ensino presencial, com 111 alunos, contra 25 que preferem ensino remoto e apenas 5 são indiferentes. 
+
+
+## Turma da disciplina de estátistica dos alunoss
+
+```{r}
+
+tb <- df %>% 
+  group_by(TURMA) %>% 
+  summarise(Total=n())
+
+print(tb)
+
+pie_labels <- paste(tb$TURMA, ": ", tb$Total)
+
+pie(table(df$TURMA), col=c("blue", "red", "green"), labels=pie_labels, main = "Turmas")
+
+
+```
+
+Sabemos que existe duas diferentes nomenclaturas em relação a disciplina de estatística, MAF105 e MAF160, nota-se que possui duas turmas para MAF105, sendo que MAF105T1 é a turma do horário matutino com mais alunos, possuindo 53 matriculados e MAF105T2 é a turma noturna com 48 alunos. A turma que possui menos estudantes é MAF160 com 40 alunos. Apesar disso, não possui tanta diferença entre elas, nota-se que todas estão cheias.

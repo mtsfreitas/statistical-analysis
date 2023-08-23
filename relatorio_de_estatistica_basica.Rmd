@@ -1,0 +1,161 @@
+---
+title: "Matheus3031"
+author: "Matheus Freitas Martins"
+date: "17/08/2021"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Relatório de Estatística Básica
+
+Considere as medidas de temperatura de três cidades ao longo de 200 dias. Conforme apresentado abaixo:
+
+```{r}
+set.seed(3031)#Acrescentar a matrícula como semente
+#Dataframe com as medidas de temperatura das três cidades
+df <- data.frame(x1=rnorm(200,30,10),
+                 x2=rnorm(200,15,5),
+                 x3=rnorm(200,0,15))
+```
+
+Observem que temos `r ncol(df)` colunas, cada coluna representa as temperaturas de uma cidade.
+
+## Cálculo da média, mediana, variância, desvio padrão, coeficiente de variação e quartis para as 3 cidades.
+
+## Cidade 1
+```{r}
+mean(df$x1)#calculando a média
+median(df$x1)#calculando a mediana
+var(df$x1)#calculando a variancia 
+sd(df$x1)#calculando o desvio padrão 
+sd(df$x1)/mean(df$x1) #calculando o coeficiente de variação
+quantile(df$x1, probs = 0.25)#Quartis 1
+quantile(df$x1, probs = 0.50)#Quartis 2 
+quantile(df$x1, probs = 0.75)#Quartis 3 
+```
+
+Observando a média e a mediana da primeira cidade, pode-se afirmar que nos 200 dias observados a temperatura média ficou aproximadamente em torno de 30ºC. Como os valores da média e mediana foram próximos este condiz com essas observações.
+
+Olhando para o desvio padrão (9,17) podemos afirmar que a menor temperatura foi de aproximadamente 21ºC e a máxima foi de 39ºC.
+
+Por meio dos quartis, nota-se que nos primeiros dias apresentou-se uma baixa temperatura (23,5ºC), o que possivelmente indica um clima de inverno. Por outro lado, na metade dos dias houve um significativo aumento da temperatura (30,25ºC), o que aponta a chegada da temporada de privamera. Ademais, os últimos dias observados apresentam uma grande alta na temperatura (36,19ºC), permitindo concluir que estava na temporada de verão.
+
+## Cidade 2
+```{r}
+mean(df$x2)#calculando a média
+median(df$x2)#calculando a mediana
+var(df$x2)#calculando a variancia 
+sd(df$x2)#calculando o desvio padrão 
+sd(df$x2)/mean(df$x2) #calculando o coeficiente de variação
+quantile(df$x2, probs = 0.25)#Quartis 1
+quantile(df$x2, probs = 0.50)#Quartis 2 
+quantile(df$x2, probs = 0.75)#Quartis 3 
+```
+
+Observando a média e a mediana da segunda cidade, pode-se afirmar que nos 200 dias observados a temperatura média ficou aproximadamente em torno de 14ºC. Como os valores da média e mediana foram próximos este condiz com essas observações.
+
+Olhando para o desvio padrão (4,9) podemos afirmar que a menor temperatura foi de aproximadamente 10ºC e a máxima foi de 19,8ºC.
+
+Por meio dos quartis, nota-se que nos primeiros dias apresentou-se uma baixa temperatura (11,7ºC), o que possivelmente indica um clima de inverno. Por outro lado, na metade dos dias houve um significativo aumento da temperatura (14,7ºC), o que aponta a chegada da temporada de privamera. Ademais, os últimos dias observados apresentam uma pequena alta na temperatura (18,68º), permitindo concluir a chegada gradativa da temporada de verão.
+
+## Cidade 3
+```{r}
+mean(df$x3)#calculando a média
+median(df$x3)#calculando a mediana
+var(df$x3)#calculando a variancia 
+sd(df$x3)#calculando o desvio padrão 
+sd(df$x3)/mean(df$x3) #calculando o coeficiente de variação
+quantile(df$x3, probs = 0.25)#Quartis 1 
+quantile(df$x3, probs = 0.50)#Quartis 2
+quantile(df$x3, probs = 0.75)#Quartis 3 
+```
+
+Como a média é sensível a valores extremos, no caso da cidade 3, o valor que melhor descreve a temperatura média observada nos 200 dias é a mediana que é de 1,45ºC
+
+Olhando para o desvio padrão (16,4) podemos afirmar que a menor temperatura foi de aproximadamente -16,61ºC e a máxima foi de 16,21ºC.
+
+Por meio dos quartis, nota-se que nos primeiros dias apresentou-se uma temperatura negativa (-10,4ºC), o que possivelmente indica um rigoroso clima de inverno. Por outro lado, na metade dos dias houve um significativo aumento da temperatura (1,45ºC), o que aponta a chegada da temporada de privamera. Ademais, os últimos dias observados apresentam uma pequena alta na temperatura (10,68º), permitindo concluir a chegada gradativa da temporada de verão.
+
+Por fim, com os dados obtidos até aqui conclui-se que houve uma maior variabilidade nas temperaturas da terceira cidade, sendo ela de 58%.
+
+## Histograma da cidade 1
+```{r}
+hist(df$x1, main = "Histograma da Cidade 1", xlab = "Temperatura", col="red")
+```
+
+Conforme observado anteriormente com os cálculos da cidade 1, pode-se constatar realmente uma grande predominância de temperaturas que giram em torno de 20ºC, 30ºC e 40ºC. Sendo esta considerada a cidade mais quente na maior parte dos dias.
+
+## Histograma da cidade 2
+```{r}
+hist(df$x2, main = "Histograma da Cidade 2", xlab = "Temperatura", col="green")
+```
+
+Conforme observado anteriormente com os cálculos da cidade 2, pode-se constatar realmente uma grande predominância de temperaturas que giram em torno de 10ºC, 15ºC e 20ºC. Sendo esta a cidade com o clima mais moderado.
+
+## Histograma da cidade 3
+```{r}
+hist(df$x3, main = "Histograma da Cidade 3", xlab = "Temperatura", col="blue")
+```
+
+Conforme observado anteriormente com os cálculos da cidade 3, é notável de que se trata de uma cidade relativamente mais fria do que as demais na maior parte dos dias, possuindo uma maior frequência que gira em torno de 0ºC a 10ºC, e nota-se também que possui uma maior variabilidade em relação as temperaturas.
+
+## Boxplot da cidade 1
+```{r}
+boxplot(df$x1, col="red")
+
+```
+
+Observando o respectivo boxplot da cidade 1, é visto que existe um outlier de temperatura elevada. Além disso, vale dizer que os dados observados estão mais condensados aproximadamente entre 37º e 23ºC
+
+## Boxplot da cidade 2 
+```{r}
+boxplot(df$x2, col="green")
+```
+
+Observando o respectivo boxplot da cidade 2, é visto que existe um outlier de temperatura inferior. Além disso, vale dizer que os dados observados estão mais condensados aproximadamente entre 18º e 13ºC
+
+## Boxplot da cidade 3
+```{r}
+boxplot(df$x3, col="blue")
+```
+
+Observando o respectivo boxplot da cidade 3, é visto que existe um outlier de temperatura inferior. Além disso, vale dizer que os dados observados estão mais condensados aproximadamente entre -10º e 15ºC
+
+## Assimetria dos dados
+
+Se o coeficiente de assimetria for **maior do que zero**, indica que a maioria dos valores está concentrado no lado esquerdo do gráfico.
+
+Se o coeficiente de assimetria for **igual ou próximo de zero**, indica que os dados são normalmente distribuídos.
+
+Se o coeficiente de assimetria for **menor do que zero**, indica que a maioria dos valores está concentrado no lado direito do gráfico.
+
+
+**Cidade 1**
+```{r}
+library(moments) #utilizando a biblioteca "moments"
+skewness(df$x1) #Assimetria dos dados da cidade 1
+```
+
+Observando o valor resultante da função skewness e o histograma da cidade 1 é possível observar que a maioria dos valores está concentrada do lado esquerdo do gráfico. 
+
+**Cidade 2**
+```{r}
+library(moments) #utilizando a biblioteca "moments"
+skewness(df$x2) #Assimetria dos dados da cidade 2
+```
+
+Observando o valor resultante da função skewness e o histograma da cidade 2 é possível observar que a maioria dos valores está concentrada ao lado direito.
+
+**Cidade 3**
+```{r}
+library(moments) #utilizando a biblioteca "moments"
+skewness(df$x3) #Assimetria dos dados da cidade 3
+```
+
+Observando o valor resultante da função skewness e o histograma da cidade 3 é possível observar que a maioria dos valores está concentrada ao lado direito.
+
