@@ -1,0 +1,39 @@
+---
+title: "SomatorioProdutorio"
+author: "Matheus Freitas Martins"
+date: "03/08/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Aula de Somatório e Produtório
+
+Este é um relatório da aula de estatística básica, estamos estudando uma ferramento matemática básica, nível, primeiro ano do Ensino Fundamental. Por isso, vamos aprender tranquilamento, sem nenhum problema e vamos dar aula disso no futuro para nossos filhos e filhas! 
+
+## Somatório
+
+Aqui vamos falar de somatório, que nada mais é que...
+
+```{r}
+
+k <- 1:10
+k
+sum(k)
+
+
+```
+
+Aqui agora, vamos acrescentar os comandos da aula de hoje. Precisamos finalizar logo, pois o professor está com fome! 
+
+```{r}
+k <- 0:10
+for (i in 1:11) {
+  print(0:k[i])
+  
+}
+```
+
+
